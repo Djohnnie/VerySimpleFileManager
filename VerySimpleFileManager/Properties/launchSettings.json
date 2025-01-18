@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "VerySimpleFileManager": {
+      "commandName": "Project",
+      "commandLineArgs": "G:\\"
+    }
+  }
+}
