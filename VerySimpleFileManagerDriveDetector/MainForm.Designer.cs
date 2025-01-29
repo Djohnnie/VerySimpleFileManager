@@ -37,7 +37,7 @@ partial class MainForm
         // notificationTrayIcon
         // 
         notificationTrayIcon.Icon = (Icon)resources.GetObject("notificationTrayIcon.Icon");
-        notificationTrayIcon.Text = "notifyIcon1";
+        notificationTrayIcon.Text = "Eenvoudig fotobeheer hulpje";
         notificationTrayIcon.Visible = true;
         // 
         // pollingTimer
@@ -48,10 +48,11 @@ partial class MainForm
         // 
         // MainForm
         // 
-        AutoScaleDimensions = new SizeF(10F, 25F);
+        AutoScaleDimensions = new SizeF(8F, 20F);
         AutoScaleMode = AutoScaleMode.Font;
-        ClientSize = new Size(563, 0);
+        ClientSize = new Size(450, 0);
         Icon = (Icon)resources.GetObject("$this.Icon");
+        Margin = new Padding(2, 2, 2, 2);
         Name = "MainForm";
         ShowInTaskbar = false;
         Text = "Very Simple File Manager - Drive Detector";

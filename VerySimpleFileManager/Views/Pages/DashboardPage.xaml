@@ -6,6 +6,8 @@
     xmlns:local="clr-namespace:VerySimpleFileManager.Views.Pages"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+    xmlns:vm="clr-namespace:VerySimpleFileManager.ViewModels.Pages"
+    xmlns:converters="clr-namespace:VerySimpleFileManager.Converters"
     Title="DashboardPage"
     d:DataContext="{d:DesignInstance local:DashboardPage,
                                      IsDesignTimeCreatable=False}"
@@ -15,22 +17,38 @@
     ui:Design.Foreground="{DynamicResource TextFillColorPrimaryBrush}"
     Foreground="{DynamicResource TextFillColorPrimaryBrush}"
     mc:Ignorable="d">
+    <Page.Resources>
+        <converters:BooleanToColorConverter x:Key="IsIndexedToColorConverter"
+                                            TrueColor="{StaticResource InfoBarSuccessSeverityBackgroundBrush}"
+                                            FalseColor="{StaticResource InfoBarWarningSeverityBackgroundBrush}" />
+    </Page.Resources>
 
-    <Grid VerticalAlignment="Top">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto" />
-            <ColumnDefinition Width="Auto" />
-        </Grid.ColumnDefinitions>
-
-        <ui:Button
-            Grid.Column="0"
-            Command="{Binding ViewModel.CounterIncrementCommand, Mode=OneWay}"
-            Content="Click me!"
-            Icon="Fluent24" />
-        <TextBlock
-            Grid.Column="1"
-            Margin="12,0,0,0"
-            VerticalAlignment="Center"
-            Text="{Binding ViewModel.Counter, Mode=OneWay}" />
-    </Grid>
+    <ItemsControl ItemsSource="{Binding ViewModel.Drives}">
+        <ItemsControl.ItemTemplate>
+            <DataTemplate DataType="{x:Type vm:DashboardDrive}">
+                <ui:CardAction Grid.Row="0" Margin="0,5" 
+                               Background="{Binding IsIndexed, Converter={StaticResource IsIndexedToColorConverter}}"
+                               Command="{Binding ClickCommand}">
+                    <ui:CardAction.Icon>
+                        <ui:SymbolIcon FontSize="30" Symbol="UsbStick24" />
+                    </ui:CardAction.Icon>
+                    <Grid Margin="0,0,10,0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+                        <ui:TextBlock Grid.Row="0" Margin="0"
+                                      FontWeight="Bold"
+                                      Text="{Binding Label}"
+                                      TextWrapping="WrapWithOverflow" />
+                        <ui:TextBlock Grid.Row="0" Margin="0"
+                                      Text="{Binding Description}"
+                                      TextWrapping="WrapWithOverflow"
+                                      HorizontalAlignment="Right"/>
+                        <ProgressBar Grid.Row="1" Margin="0,5" IsIndeterminate="True" Foreground="Blue" />
+                    </Grid>
+                </ui:CardAction>
+            </DataTemplate>
+        </ItemsControl.ItemTemplate>
+    </ItemsControl>
 </Page>

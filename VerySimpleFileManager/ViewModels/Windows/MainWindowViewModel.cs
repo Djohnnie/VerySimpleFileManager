@@ -9,7 +9,7 @@ namespace VerySimpleFileManager.ViewModels.Windows;
 public partial class MainWindowViewModel : ObservableObject
 {
     [ObservableProperty]
-    private string _applicationTitle = "Eenvoudige bestandsbeheerder";
+    private string _applicationTitle = "Eenvoudige fotobeheer";
 
     [ObservableProperty]
     private ObservableCollection<object> _menuItems = new()
@@ -17,6 +17,7 @@ public partial class MainWindowViewModel : ObservableObject
         new NavigationViewItem()
         {
             Content = "Start",
+            ToolTip = "Start",
             Icon = new SymbolIcon { Symbol = SymbolRegular.Home24 },
             TargetPageType = typeof(Views.Pages.DashboardPage)
         },
@@ -28,6 +29,7 @@ public partial class MainWindowViewModel : ObservableObject
         new NavigationViewItem()
         {
             Content = "Instellingen",
+            ToolTip = "Instellingen",
             Icon = new SymbolIcon { Symbol = SymbolRegular.Settings24 },
             TargetPageType = typeof(Views.Pages.SettingsPage)
         }
@@ -58,15 +60,18 @@ public partial class MainWindowViewModel : ObservableObject
                     });
                 }
 
-                var x = new NavigationViewItem()
+                var description = $"{drive.Name} ({drive.VolumeLabel})";
+
+                var navigationItem = new NavigationViewItem()
                 {
-                    Content = $"{drive.Name} ({drive.VolumeLabel})",
+                    Content = description,
+                    ToolTip = description,
                     Icon = new SymbolIcon { Symbol = SymbolRegular.UsbStick24 },
                     TargetPageType = typeof(Views.Pages.FileBrowserPage),
                     TargetPageTag = drive.Name,
                 };
 
-                _menuItems.Add(x);
+                _menuItems.Add(navigationItem);
             }
         }
     }

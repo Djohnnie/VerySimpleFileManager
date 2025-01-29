@@ -32,12 +32,14 @@ public partial class FileBrowserViewModel : ObservableObject
         if (!string.IsNullOrEmpty(_temp))
         {
             var drive = _fileIndexerHelper.Drives.FirstOrDefault(x => x.Name == _temp);
-            var count = drive.Where(x => x.Name.EndsWith("jpg")).Count;
-            FileScanPollingMessage = $"{(count == 0 ? "Geen" : count)} foto's gevonden...";
-
-            if (drive.IsIndexed)
+            if (drive != null)
             {
-                InfoBarSeverity = InfoBarSeverity.Success;
+                FileScanPollingMessage = drive.CountFiles();
+
+                if (drive.IsIndexed)
+                {
+                    InfoBarSeverity = InfoBarSeverity.Success;
+                }
             }
         }
     }
