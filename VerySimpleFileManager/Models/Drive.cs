@@ -21,13 +21,13 @@ public class Drive
     public int CountPhotoFiles()
     {
         string[] extensions = ["jpg", "jpeg", "png", "gif", "bmp"];
-        return Where(x => extensions.Contains(x.Name.Split('.').Last())).Count;
+        return Where(x => extensions.Contains(x.Name.ToLower().Split('.').Last())).Count;
     }
 
     public int CountVideoFiles()
     {
         string[] extensions = ["mp4", "avi", "mkv", "mov", "wmv"];
-        return Where(x => extensions.Contains(x.Name.Split('.').Last())).Count;
+        return Where(x => extensions.Contains(x.Name.ToLower().Split('.').Last())).Count;
     }
 
     private List<File> Where(Func<File, bool> predicate)

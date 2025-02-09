@@ -5,6 +5,8 @@ namespace VerySimpleFileManager.Helpers;
 
 public class FileIndexerHelper
 {
+    private readonly string[] _extensions = { "jpg", "jpeg", "png", "gif", "bmp", "mp4", "avi", "mkv", "mov", "wmv" };
+
     public List<Drive> Drives { get; set; } = [];
 
     internal async Task ProcessDrive(Drive drive)
@@ -88,11 +90,14 @@ public class FileIndexerHelper
     {
         try
         {
-            folder.Files.Add(new Models.File
+            if (_extensions.Contains(fileInfo.Name.ToLower().Split('.').Last()))
             {
-                Name = fileInfo.Name,
-                Path = fileInfo.FullName
-            });
+                folder.Files.Add(new Models.File
+                {
+                    Name = fileInfo.Name,
+                    Path = fileInfo.FullName
+                });
+            }
         }
         catch (Exception ex)
         {
@@ -104,11 +109,14 @@ public class FileIndexerHelper
     {
         try
         {
-            drive.Files.Add(new Models.File
+            if (_extensions.Contains(fileInfo.Name.ToLower().Split('.').Last()))
             {
-                Name = fileInfo.Name,
-                Path = fileInfo.FullName
-            });
+                drive.Files.Add(new Models.File
+                {
+                    Name = fileInfo.Name,
+                    Path = fileInfo.FullName
+                });
+            }
         }
         catch (Exception ex)
         {

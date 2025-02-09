@@ -22,4 +22,9 @@ public partial class FileBrowserPage : INavigableView<FileBrowserViewModel>
     {
         ViewModel.Temp = pageTag;
     }
+
+    private void Page_Unloaded(object sender, RoutedEventArgs e)
+    {
+        ViewModel.Dispose();
+    }
 }
