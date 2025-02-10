@@ -1,5 +1,5 @@
-﻿using Wpf.Ui.Appearance;
-using Wpf.Ui.Controls;
+﻿using Wpf.Ui.Abstractions.Controls;
+using Wpf.Ui.Appearance;
 
 namespace VerySimpleFileManager.ViewModels.Pages;
 
@@ -13,13 +13,15 @@ public partial class SettingsViewModel : ObservableObject, INavigationAware
     [ObservableProperty]
     private ApplicationTheme _currentTheme = ApplicationTheme.Unknown;
 
-    public void OnNavigatedTo()
+    public Task OnNavigatedToAsync()
     {
         if (!_isInitialized)
             InitializeViewModel();
+
+        return Task.CompletedTask;
     }
 
-    public void OnNavigatedFrom() { }
+    public Task OnNavigatedFromAsync() => Task.CompletedTask;
 
     private void InitializeViewModel()
     {

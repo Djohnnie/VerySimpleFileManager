@@ -12,6 +12,7 @@ using VerySimpleFileManager.Views.Pages;
 using VerySimpleFileManager.Views.Windows;
 using VerySimpleFileManager.Workers;
 using Wpf.Ui;
+using Wpf.Ui.DependencyInjection;
 
 namespace VerySimpleFileManager;
 
@@ -22,11 +23,10 @@ public partial class App
         .ConfigureAppConfiguration(c => { c.SetBasePath(Path.GetDirectoryName(Assembly.GetEntryAssembly()!.Location)); })
         .ConfigureServices((context, services) =>
         {
+            services.AddNavigationViewPageProvider();
+
             services.AddHostedService<ApplicationHostService>();
             services.AddHostedService<FileIndexerWorker>();
-
-            // Page resolver service
-            services.AddSingleton<IPageService, PageService>();
 
             // Theme manipulation
             services.AddSingleton<IThemeService, ThemeService>();
@@ -55,18 +55,14 @@ public partial class App
             services.AddSingleton<FileIndexerHelper>();
         }).Build();
 
-    public static T GetService<T>()
-        where T : class
+    public static IServiceProvider Services
     {
-        return _host.Services.GetService(typeof(T)) as T;
+        get { return _host.Services; }
     }
 
-    private void OnStartup(object sender, StartupEventArgs e)
+    private async void OnStartup(object sender, StartupEventArgs e)
     {
-        var commandLineArgumentHelper = GetService<CommandLineArgumentHelper>();
-        commandLineArgumentHelper.Arguments.AddRange(e.Args);
-
-        _host.Start();
+        await _host.StartAsync();
     }
 
     private async void OnExit(object sender, ExitEventArgs e)

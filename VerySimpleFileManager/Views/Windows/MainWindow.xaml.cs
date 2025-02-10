@@ -2,6 +2,7 @@
 using VerySimpleFileManager.ViewModels.Windows;
 using VerySimpleFileManager.Views.Pages;
 using Wpf.Ui;
+using Wpf.Ui.Abstractions;
 using Wpf.Ui.Appearance;
 using Wpf.Ui.Controls;
 
@@ -13,8 +14,8 @@ public partial class MainWindow : INavigationWindow
 
     public MainWindow(
         MainWindowViewModel viewModel,
+        INavigationViewPageProvider navigationViewPageProvider,
         CommandLineArgumentHelper commandLineArgumentHelper,
-        IPageService pageService,
         INavigationService navigationService
     )
     {
@@ -24,7 +25,7 @@ public partial class MainWindow : INavigationWindow
         SystemThemeWatcher.Watch(this);
 
         InitializeComponent();
-        SetPageService(pageService);
+        SetPageService(navigationViewPageProvider);
 
         RootNavigation.Navigated += RootNavigation_Navigated;
 
@@ -67,7 +68,7 @@ public partial class MainWindow : INavigationWindow
 
     public bool Navigate(Type pageType) => RootNavigation.Navigate(pageType);
 
-    public void SetPageService(IPageService pageService) => RootNavigation.SetPageService(pageService);
+    public void SetPageService(INavigationViewPageProvider navigationViewPageProvider) => RootNavigation.SetPageProviderService(navigationViewPageProvider);
 
     public void ShowWindow() => Show();
 

@@ -1,5 +1,5 @@
 ﻿using VerySimpleFileManager.ViewModels.Pages;
-using Wpf.Ui.Controls;
+using Wpf.Ui.Abstractions.Controls;
 
 namespace VerySimpleFileManager.Views.Pages;
 

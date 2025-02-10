@@ -163,8 +163,6 @@ public partial class FileBrowserViewModel : ObservableObject, IDisposable
     {
         _fileScanPollingTimer.Stop();
         _directoryScanPollingTimer.Stop();
-
-        _fileCache.Clear();
     }
 }
 
